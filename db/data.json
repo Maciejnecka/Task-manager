@@ -1,9 +1,24 @@
 {
-  "data": [
+  "tasks": [
     {
-      "id": 1,
-      "firstName": "Jan",
-      "lastName": "Kowalski"
+      "name": "Test data task",
+      "id": 1
+    },
+    {
+      "name": "Test data task 2",
+      "id": 2
+    },
+    {
+      "name": "1234Test1234",
+      "id": 3
+    },
+    {
+      "name": "s",
+      "id": 4
+    },
+    {
+      "name": "Test",
+      "id": 5
     }
   ]
 }

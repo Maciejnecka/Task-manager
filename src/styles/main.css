@@ -1,3 +1,19 @@
 body {
-    background: #dcdcdc;
+  background: #dcdcdc;
+}
+
+h1 {
+  font-size: 30px;
+  font-weight: bold;
+}
+/* Temp */
+#root {
+  margin: 20px;
+}
+
+.li-temp {
+  margin: 5px;
+  border: 1px solid black;
+  padding: 5px;
+  font-size: 20px;
 }

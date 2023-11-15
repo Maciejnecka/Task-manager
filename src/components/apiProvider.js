@@ -14,11 +14,11 @@ export function create(resource, data) {
   return fetchData(resource, option);
 }
 
-export function remove(resource, id) {
+export function remove(id) {
   const option = {
     method: 'DELETE',
   };
-  return fetchData(resource, option, id);
+  return fetchData('/tasks', option, id);
 }
 
 export function update(resource, id, updatedEl) {
@@ -28,6 +28,20 @@ export function update(resource, id, updatedEl) {
     headers: { 'Content-Type': 'application/json' },
   };
   return fetchData(resource, option, id);
+}
+
+export function finish(id, tasks) {
+  const updatedTask = tasks.find((task) => task.id === id);
+  const option = {
+    method: 'PATCH',
+    body: JSON.stringify({
+      isDone: true,
+      isRunning: false,
+      time: updatedTask.time,
+    }),
+    headers: { 'Content-Type': 'application/json' },
+  };
+  return fetchData(`/tasks/${id}`, option);
 }
 
 function fetchData(resource = '', options = { method: 'GET' }, id = '') {

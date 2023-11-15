@@ -1,16 +1,53 @@
 'use strict';
 import React from 'react';
-import { create } from './apiProvider';
-import { get } from './apiProvider';
+import { create, remove, update, get, finish } from './apiProvider';
 
 class TasksManager extends React.Component {
-  state = {
-    tasks: [],
-    task: '',
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      tasks: [],
+      task: '',
+      intervalId: null,
+    };
+  }
 
   componentDidMount() {
     this.fetchTasks();
+  }
+
+  componentWillUnmount() {
+    const { intervalId } = this.state;
+    clearInterval(intervalId);
+  }
+
+  componentDidUpdate(prevState) {
+    if (prevState.tasks !== this.state.tasks) {
+      const runningTasks = this.state.tasks.filter((task) => task.isRunning);
+
+      if (runningTasks.length > 0 && !this.state.intervalId) {
+        const intervalId = setInterval(() => {
+          this.setState((prevState) => {
+            const updatedTasks = prevState.tasks.map((task) =>
+              task.isRunning
+                ? {
+                    ...task,
+                    time: task.time + 1,
+                  }
+                : task
+            );
+            return {
+              tasks: updatedTasks,
+            };
+          });
+        }, 1000);
+
+        this.setState({ intervalId });
+      } else if (runningTasks.length === 0 && this.state.intervalId) {
+        clearInterval(this.state.intervalId);
+        this.setState({ intervalId: null });
+      }
+    }
   }
 
   fetchTasks = async () => {
@@ -51,10 +88,96 @@ class TasksManager extends React.Component {
         tasks: [...tasks, newItem],
         task: '',
       });
+
+      update('/tasks', response.id, newItem);
     } catch (error) {
       console.error('Error adding task: ', error);
     }
   };
+
+  handleStartStop = async (id) => {
+    this.setState((prevState) => {
+      const isRunning = !prevState.tasks.find((task) => task.id === id)
+        .isRunning;
+      const startTime = isRunning
+        ? Date.now() -
+          prevState.tasks.find((task) => task.id === id).time * 1000
+        : prevState.tasks.find((task) => task.id === id).startTime;
+
+      const newTasks = prevState.tasks.map((task) =>
+        task.id === id
+          ? {
+              ...task,
+              isRunning: !task.isRunning,
+              startTime: isRunning ? Date.now() : startTime,
+            }
+          : task
+      );
+
+      const updatedTask = newTasks.find((task) => task.id === id);
+      const elapsedTime = isRunning
+        ? Math.floor((Date.now() - updatedTask.startTime) / 1000)
+        : 0;
+
+      update('/tasks', id, {
+        isRunning: isRunning,
+        startTime: startTime,
+        endTime: isRunning ? null : Date.now(),
+        time: updatedTask.time + elapsedTime,
+      });
+
+      return { tasks: newTasks, intervalId: prevState.intervalId };
+    });
+  };
+
+  handleRemove = async (id) => {
+    const taskToRemove = this.state.tasks.find((task) => task.id === id);
+
+    if (taskToRemove.isDone) {
+      this.setState((state) => {
+        const newTasks = state.tasks.filter((task) => task.id !== id);
+        remove(id);
+        return {
+          tasks: newTasks,
+        };
+      });
+    } else {
+      console.error('Task must be finished before removal.');
+    }
+  };
+
+  handleFinish = async (id) => {
+    this.setState((prevState) => {
+      const newTasks = prevState.tasks.map((task) =>
+        task.id === id
+          ? {
+              ...task,
+              isDone: true,
+              isRunning: false,
+            }
+          : task
+      );
+      finish(id, newTasks);
+      clearInterval(prevState.intervalId);
+
+      return {
+        tasks: newTasks,
+        intervalId: null,
+      };
+    });
+  };
+
+  formatTime = (timeInSeconds) => {
+    const hours = Math.floor(timeInSeconds / 3600);
+    const minutes = Math.floor((timeInSeconds % 3600) / 60);
+    const seconds = timeInSeconds % 60;
+
+    return `${this.padZero(hours)}:${this.padZero(minutes)}:${this.padZero(
+      seconds
+    )}`;
+  };
+
+  padZero = (num) => (num < 10 ? `0${num}` : num);
 
   onClick = () => {
     const { tasks } = this.state;
@@ -79,9 +202,30 @@ class TasksManager extends React.Component {
         </form>
         <ul>
           {this.state.tasks.map((task) => (
-            <li className="li-temp" key={task.id}>
-              {task.name}
-            </li>
+            <section key={task.id}>
+              <header>{`${task.name}, ${this.formatTime(task.time)}`}</header>
+              <p>{`Status: ${task.isDone ? 'Finished' : 'In progress'}`}</p>
+              <footer>
+                <button
+                  onClick={() => this.handleStartStop(task.id)}
+                  disabled={task.isDone}
+                >
+                  {task.isRunning ? 'stop' : 'start'}
+                </button>
+                <button
+                  onClick={() => this.handleFinish(task.id)}
+                  disabled={task.isDone}
+                >
+                  Finish
+                </button>
+                <button
+                  onClick={() => this.handleRemove(task.id)}
+                  disabled={!task.isDone}
+                >
+                  Remove
+                </button>
+              </footer>
+            </section>
           ))}
         </ul>
       </div>

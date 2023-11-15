@@ -1,24 +1,30 @@
 {
   "tasks": [
     {
-      "name": "Test data task",
-      "id": 1
+      "name": "1",
+      "id": 1,
+      "time": 5,
+      "isRunning": false,
+      "isDone": true,
+      "isRemoved": false,
+      "startTime": 1700079816537,
+      "endTime": null
     },
     {
-      "name": "Test data task 2",
-      "id": 2
+      "name": "2",
+      "id": 2,
+      "time": 0,
+      "isRunning": false,
+      "isDone": false,
+      "isRemoved": false
     },
     {
-      "name": "1234Test1234",
-      "id": 3
-    },
-    {
-      "name": "s",
-      "id": 4
-    },
-    {
-      "name": "Test",
-      "id": 5
+      "name": "3",
+      "id": 3,
+      "time": 0,
+      "isRunning": false,
+      "isDone": false,
+      "isRemoved": false
     }
   ]
 }

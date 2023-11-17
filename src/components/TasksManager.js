@@ -141,8 +141,6 @@ class TasksManager extends React.Component {
           tasks: newTasks,
         };
       });
-    } else {
-      console.error('Task must be finished before removal.');
     }
   };
 
@@ -185,40 +183,65 @@ class TasksManager extends React.Component {
   };
 
   render() {
+    const { tasks } = this.state;
+
+    const unfinishedTasks = tasks.filter((task) => !task.isDone);
+    const finishedTasks = tasks.filter((task) => task.isDone);
+
+    const combinedTasks = [...unfinishedTasks, ...finishedTasks];
     return (
-      <div>
-        <h1 onClick={this.onClick}>TasksManager</h1>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Task:
+      <div className="tasks-manager">
+        <h1 className="tasks-manager__title" onClick={this.onClick}>
+          TasksManager
+        </h1>
+        <form className="tasks-manager__form" onSubmit={this.handleSubmit}>
+          <label className="tasks-manager__label">
             <input
+              className="tasks-manager__input"
+              placeholder="Add your task"
               type="text"
               name="task"
               value={this.state.task}
               onChange={this.handleChange}
             />
           </label>
-          <button type="submit">Add Task</button>
+          <button className="tasks-manager__button" type="submit">
+            Add Task
+          </button>
         </form>
-        <ul>
-          {this.state.tasks.map((task) => (
-            <section key={task.id}>
-              <header>{`${task.name}, ${this.formatTime(task.time)}`}</header>
-              <p>{`Status: ${task.isDone ? 'Finished' : 'In progress'}`}</p>
-              <footer>
+        <ul className="tasks-manager__list">
+          {combinedTasks.map((task) => (
+            <section
+              key={task.id}
+              className={`tasks-manager__task ${
+                task.isDone ? 'tasks-manager__task--finished' : ''
+              }${task.isRunning ? 'tasks-manager__task--running' : ''}`}
+            >
+              <header className="tasks-manager__task-header">
+                {`${task.name} ${this.formatTime(task.time)}`}
+              </header>
+              <p className="tasks-manager__task-status">
+                {`Status: ${task.isDone ? 'Finished' : 'In progress'}`}
+              </p>
+              <footer className="tasks-manager__task-footer">
                 <button
+                  className={`tasks-manager__task-button ${
+                    task.isRunning ? 'pulsate' : ''
+                  }`}
                   onClick={() => this.handleStartStop(task.id)}
                   disabled={task.isDone}
                 >
-                  {task.isRunning ? 'stop' : 'start'}
+                  {task.isRunning ? 'Stop' : 'Start'}
                 </button>
                 <button
+                  className="tasks-manager__task-button"
                   onClick={() => this.handleFinish(task.id)}
                   disabled={task.isDone}
                 >
                   Finish
                 </button>
                 <button
+                  className="tasks-manager__task-button"
                   onClick={() => this.handleRemove(task.id)}
                   disabled={!task.isDone}
                 >

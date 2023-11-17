@@ -1,0 +1,58 @@
+:root {
+  --running-color: #4caf50;
+}
+
+@keyframes pulsate {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes running-border {
+  0% {
+    border-image-source: linear-gradient(
+      0deg,
+      transparent,
+      var(--running-color),
+      transparent
+    );
+  }
+  25% {
+    border-image-source: linear-gradient(
+      90deg,
+      transparent,
+      var(--running-color),
+      transparent
+    );
+  }
+  50% {
+    border-image-source: linear-gradient(
+      180deg,
+      transparent,
+      var(--running-color),
+      transparent
+    );
+  }
+  75% {
+    border-image-source: linear-gradient(
+      270deg,
+      transparent,
+      var(--running-color),
+      transparent
+    );
+  }
+  100% {
+    border-image-source: linear-gradient(
+      0deg,
+      transparent,
+      var(--running-color),
+      transparent
+    );
+  }
+}

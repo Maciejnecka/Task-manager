@@ -134,13 +134,18 @@ class TasksManager extends React.Component {
     const taskToRemove = this.state.tasks.find((task) => task.id === id);
 
     if (taskToRemove.isDone) {
-      this.setState((state) => {
-        const newTasks = state.tasks.filter((task) => task.id !== id);
-        remove(id);
-        return {
-          tasks: newTasks,
-        };
-      });
+      const isConfirmed = window.confirm(
+        'Are you sure you want to remove this task?'
+      );
+      if (isConfirmed) {
+        this.setState((state) => {
+          const newTasks = state.tasks.filter((task) => task.id !== id);
+          remove(id);
+          return {
+            tasks: newTasks,
+          };
+        });
+      }
     }
   };
 

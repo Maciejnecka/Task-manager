@@ -9,6 +9,7 @@ class TasksManager extends React.Component {
       tasks: [],
       task: '',
       intervalId: null,
+      confirmationModalIds: {},
     };
   }
 
@@ -130,23 +131,41 @@ class TasksManager extends React.Component {
     });
   };
 
-  handleRemove = async (id) => {
-    const taskToRemove = this.state.tasks.find((task) => task.id === id);
+  handleRemove = (id) => {
+    this.setState((prevState) => {
+      const confirmationModalIds = {
+        ...prevState.confirmationModalIds,
+        [id]: true,
+      };
+      return {
+        confirmationModalIds,
+      };
+    });
+  };
 
-    if (taskToRemove.isDone) {
-      const isConfirmed = window.confirm(
-        'Are you sure you want to remove this task?'
-      );
-      if (isConfirmed) {
-        this.setState((state) => {
-          const newTasks = state.tasks.filter((task) => task.id !== id);
-          remove(id);
-          return {
-            tasks: newTasks,
-          };
-        });
-      }
+  confirmRemove = async (id) => {
+    this.setState({
+      confirmationModalIds: {
+        ...this.state.confirmationModalIds,
+        [id]: null,
+      },
+    });
+
+    if (id !== null) {
+      this.setState((state) => {
+        const newTasks = state.tasks.filter((task) => task.id !== id);
+        remove(id);
+        return {
+          tasks: newTasks,
+        };
+      });
     }
+  };
+
+  cancelRemove = () => {
+    this.setState({
+      confirmationModalIds: null,
+    });
   };
 
   handleFinish = async (id) => {
@@ -188,7 +207,7 @@ class TasksManager extends React.Component {
   };
 
   render() {
-    const { tasks } = this.state;
+    const { tasks, confirmationModalIds } = this.state;
 
     const unfinishedTasks = tasks.filter((task) => !task.isDone);
     const finishedTasks = tasks.filter((task) => task.isDone);
@@ -253,6 +272,32 @@ class TasksManager extends React.Component {
                   Remove
                 </button>
               </footer>
+              <div
+                className="confirmation-modal"
+                style={{
+                  display:
+                    confirmationModalIds !== null &&
+                    confirmationModalIds[task.id]
+                      ? 'block'
+                      : 'none',
+                }}
+              >
+                <p className="confirmation-modal__paragraph">
+                  Are you sure you want to remove this task?
+                </p>
+                <button
+                  className="confirmation-modal__button confirmation-modal__button-confirm"
+                  onClick={() => this.confirmRemove(task.id)}
+                >
+                  Confirm
+                </button>
+                <button
+                  className="confirmation-modal__button confirmation-modal__button-cancel"
+                  onClick={this.cancelRemove}
+                >
+                  Cancel
+                </button>
+              </div>
             </section>
           ))}
         </ul>

@@ -81,6 +81,10 @@ body {
 }
 
 .tasks-manager__task {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   background: #456990;
   margin-bottom: 15px;
   padding: 15px;
@@ -110,7 +114,7 @@ body {
 
 .tasks-manager__task-button {
   background-color: var(--finish-color);
-  margin: 0 5px;
+  margin: 5px;
   padding: 10px 15px;
   font-size: 1rem;
   font-weight: 500;
@@ -142,4 +146,46 @@ body {
 .tasks-manager__task-button.pulsate {
   animation: pulsate 1s infinite;
   background-color: var(--running-color);
+}
+
+.confirmation-modal {
+  margin: 0.5rem auto;
+  background-color: #334756;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.confirmation-modal__paragraph {
+  font-size: 0.7rem;
+  white-space-collapse: collapse;
+  margin-bottom: 0.5rem;
+}
+
+.confirmation-modal__button {
+  color: #ffffff;
+  padding: 7px 10px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.5s;
+  margin: 0.3rem;
+}
+
+.confirmation-modal__button-confirm {
+  background-color: #ff4c29;
+}
+
+.confirmation-modal__button-cancel {
+  background-color: #ccc;
+  color: #666;
+}
+
+.confirmation-modal__button-confirm:hover,
+.confirmation-modal__button-cancel:hover {
+  color: #ff4c29;
+  background-color: transparent;
 }

@@ -1,167 +1,65 @@
-> ⭐ ***README** to coś więcej niż opis. Poprzez nie **pokazujesz swoje mocne strony** – swoją dokładność, sposób myślenia i podejście do rozwiązywania problemów. Niech Twoje README pokaże, że masz **świetne predyspozycje do rozwoju!***
-> 
-> 🎁 *Zacznij od razu. Skorzystaj z **[szablonu README i wskazówek](https://github.com/devmentor-pl/readme-template)**.* 
+# TasksManager React App
 
-&nbsp;
+TasksManager is a simple React application designed to help you manage your tasks efficiently. It provides a user-friendly interface to add, start/stop, finish, and remove tasks. The application also tracks the time spent on each task.
 
+See the live version [Soon... 🌐](#)
 
-# TasksManager
+## Functionalities
 
-## Wprowadzenie
+### Task Management
+- Add new tasks with a descriptive name. The application ensures that task names are not empty.
 
-Tym razem stworzymy jeden komponent, który będzie zarządzał naszymi zadaniami.
+### Start/Stop Tasks
+- Easily start and stop tasks to track the time spent on them. The timer updates in real-time.
 
-Będzie to rozwiązanie, które pozwoli tworzyć zadania i liczyć czas ich wykonania.
+### Finish Tasks
+- Mark tasks as finished when they are completed. Finished tasks are distinguishable from ongoing tasks.
 
-## Implementacja
+### Remove Tasks
+- Remove completed tasks from the list. A confirmation modal is displayed to prevent accidental removal.
 
-### Dodawanie zadań
+## 💡 Technologies
 
-Należy stworzyć formularz, który pozwoli na dodawanie nowych zadań. Ma to być komponent kontrolowany – do pól formularza muszą być przypisane wartości ze state (`<input name="task" value={ this.state.task } onChange={ ... } />`) i obsługa zdarzenia `onChange`.
+- ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+- ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+- ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+- ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+- ![JSON Server](https://img.shields.io/badge/JSON%20Server-6f736d?style=for-the-badge&logo=JSON&logoColor=white)
+- ![REST API](https://img.shields.io/badge/REST%20API-4f736d?style=for-the-badge&logoColor=white)
+- ![BEM Methodology](https://img.shields.io/badge/BEM%20Methodology-29BDfD?style=for-the-badge&logo=BEM&logoColor=white)
+- ![Webpack](https://img.shields.io/badge/Webpack-8DD6F9?style=for-the-badge&logo=Webpack&logoColor=white)
 
-Potwierdzenie formularza (`onSubmit`) ma skutkować wysłaniem zadania do lokalnego API stworzonego przy pomocy [json-servera](https://github.com/typicode/json-server). Po dodaniu zadania otrzymujemy odpowiedź od serwera – jest to ID nowo utworzonego elementu.
+## 💿 Installation
 
-Dopiero teraz możemy dodać to zadanie do naszej listy (`this.state.tasks`). Pamiętaj, aby za każdym razem, kiedy dodajesz nowy element, tworzyć kopię poprzedniej tablicy:
-```js
-const newItem = {
-    name: 'Zadanie 1',
-    // ... 
-};
+1. First, perform a [fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) (located at the top right corner of the page). This will create a copy of this repository on your GitHub account.
 
-this.setState(state => {
-    return {
-        tasks: [...state.tasks, newItem],
-    }
-});
-```
-### Dane pojedynczego zadania
+2. Clone the repository to your local machine using the [git clone](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) command.
 
-Każde z zadań powinno posiadać:
-- nazwę (`name`)
-- ID (`id`), które jest zwracane przez API
-- czas jego wykonywania w sekundach (`time`)
-- informację, czy czas jest odliczany w danym momencie (`isRunning`)
-- czy zadanie zostało już wykonane (`isDone`)
-- czy zostało usunięte (`isRemoved`).
+3. Navigate to the project directory:
 
-### Funkcjonalności
+    ```bash
+    cd your-project-directory
+    ```
 
-W każdym zadaniu powinniśmy mieć możliwość:
-- rozpoczęcia odliczania
-- zatrzymania odliczania, jeśli zostało wcześniej rozpoczęte
-- zakończenia zadania, co spowoduje przeniesienie go na koniec listy (można wykorzystać [.sort()](https://developer.mozilla.org/pl/docs/Web/JavaScript/Referencje/Obiekty/Array/sort))
-- usunięcia z listy, co spowoduje, że zadanie nie zostanie wyrenderowane, ale będzie cały czas przechowywane w state (można wykorzystać [.filter()](https://developer.mozilla.org/pl/docs/Web/JavaScript/Referencje/Obiekty/Array/filter)).
+4. Install dependencies using [npm](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry):
 
-Uznajemy, że w jednym momencie możemy wykonywać jedno zadanie.
+    ```bash
+    npm install
+    ```
 
-Wciśnięcie przycisku `zakończone` powinno jednocześnie zatrzymywać naliczanie czasu.
+5. JSON Server
+    ```bash
+    json-server --watch ./db/data.json --port 3005
+    ```
 
-Usunięcie zadania ma być możliwe dopiero po jego zakończeniu (uznajemy, że nie ma omyłkowo dodanych zadań).
+6. Start the app:
 
-Każda zmiana danych zadania (odliczanie, wstrzymanie, zakończenie itp.) powinna być zapisywana w API.
+    ```bash
+    npm start
+    ```
 
-Pamiętaj również, że zmiana w `state` musi odbywać się przez utworzenie kopii obiektu i dopiero potem jego aktualizację, np.
+Now you can work on tasks in your own repository and contribute to the project.
 
-```js
-incrementTime(id) {
-    this.setState(state => {
-        const newTasks = state.tasks.map(task => {
-            if(task.id === id) {
-                return {...task, time: task.time + 1}
-            }
+## 🙋‍♂️ Feel free to contact me
 
-            return task;
-        });
-
-        return {
-            tasks: newTasks,
-        }
-    });
-}
-```
-
-Każde zadanie powinno mieć strukturę zbliżoną do tej poniżej. Pamiętaj, że część przycisków musi się zachowywać zgodnie z obecnym stanem aplikacji (np. w pewnym momencie być nieaktywna).
-```html
-<section>
-    <header>Zadanie 1, 00:00:00</header>
-    <footer>
-        <button>start/stop</button>
-        <button>zakończone</button>
-        <button disabled="true">usuń</button>
-    </footer>
-</section>
-```
-
-Powyższa struktura powinna być generowana na podstawie danych z wartości `this.state.tasks` oraz przy pomocy [.map()](https://developer.mozilla.org/pl/docs/Web/JavaScript/Referencje/Obiekty/Array/map).
-
-### Uwaga
-
-Na razie nie dziel swojego komponentu na mniejsze części, ponieważ niepotrzebnie skomplikuje to implementację.
-
-W następnym materiale poznasz techniki, które Ci w takim podziale pomogą i pozwolą odpowiednio przekazywać dane pomiędzy komponentami. 
-
-### CSS
-
-Do konfiguracji webpacka (w pliku `webpack.config.js`) dodano obsługę plików CSS, dlatego możesz odpowiednio ostylować swoje rozwiązanie, wykorzystując klasy i metodologię [BEM](https://devmentor.pl/b/metodologia-bem-w-css-i-sass).
-
-Zauważ, że w `./src/app.js` importowany jest plik CSS. Dzięki temu rozwiązaniu webpack pobierze zawartość tego pliku i do `index.html` doda CSS jako znacznik `<style/>` w `<head/>`.
-
-#### Dodatkowe zasoby w CSS-ie
-
-Aby webpack odpowiednio czytał zdjęcia lub fonty w CSS-ie, należy zmodyfikować konfigurację.
-
-Możesz to uznać za zadanie dodatkowe lub poczekać na omówienie tego tematu w kolejnych materiałach.
-
-### JSON Server – przypomnienie
-
-Paczka `json-server` powinna być zainstalowana globalnie, dlatego warto mieć uprawnienia administratora (sudo na Linuksie), aby móc to zrobić.
-
-W terminalu wpisz komendę:
-
-```
-npm install -g json-server@0.17
-```
-
-Po instalacji powinieneś mieć dostęp do informacji o zainstalowanej wersji:
-
-```
-json-server -v
-```
-
-Teraz w katalogu głównym naszej aplikacji utwórz katalog `db`, a w nim plik `data.json` i wrzuć do niego testowe dane, np.:
-
-```javascript
-{
-    "data": [
-        {
-            "id": 1,
-            "firstName": "Jan",
-            "lastName": "Kowalski"
-        }
-    ]
-}
-```
-
-Jeśli masz już uruchomionego webpacka (`npm start`), to w kolejnym terminalu (wierszu poleceń) uruchom API:
-
-```
-json-server --watch ./db/data.json --port 3005
-```
-
-Ustawiamy inny port niż domyślny (3000), aby być pewnym, że nic go nie blokuje.
-
-Od teraz możesz korzystać z API pod adresem:
-
-```
-http://localhost:3005/data
-```
-
-> **Uwaga!** Jeśli API ma działać, json-server zawsze musi być uruchomiony. 
-
-
-
-&nbsp;
-
-> ⭐ ***README** to coś więcej niż opis. Poprzez nie **pokazujesz swoje mocne strony** – swoją dokładność, sposób myślenia i podejście do rozwiązywania problemów. Niech Twoje README pokaże, że masz **świetne predyspozycje do rozwoju!***
-> 
-> 🎁 *Zacznij od razu. Skorzystaj z **[szablonu README i wskazówek](https://github.com/devmentor-pl/readme-template)**.* 
+[![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/maciek-n%C4%99cka/)

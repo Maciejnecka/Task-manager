@@ -1,5 +1,5 @@
 'use strict';
-const url = 'http://localhost:3005';
+const url = 'https://my-json-server.typicode.com/Maciejnecka/JsonDB';
 
 export function get(resource) {
   return fetchData(resource);

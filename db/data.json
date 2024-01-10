@@ -21,20 +21,14 @@
       "endTime": 1704878492463
     },
     {
-      "name": "sdsd",
+      "name": "sddsd",
       "id": 3,
-      "time": 0,
+      "time": 2,
       "isRunning": false,
-      "isDone": false,
-      "isRemoved": false
-    },
-    {
-      "name": "sd",
-      "id": 4,
-      "time": 0,
-      "isRunning": false,
-      "isDone": false,
-      "isRemoved": false
+      "isDone": true,
+      "isRemoved": false,
+      "startTime": 1704928802207,
+      "endTime": 1704928804831
     }
   ]
 }

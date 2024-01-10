@@ -58,6 +58,12 @@ body {
   border-radius: 4px;
 }
 
+.tasks-manager__error-message {
+  margin-bottom: 1rem;
+  text-align: center;
+  color: #ff4c29;
+}
+
 .tasks-manager__button {
   background-color: var(--finish-color);
   padding: 10px 20px;

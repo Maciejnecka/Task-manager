@@ -3,12 +3,12 @@
     {
       "name": "Task ",
       "id": 1,
-      "time": 0,
-      "isRunning": true,
-      "isDone": false,
+      "time": 222,
+      "isRunning": false,
+      "isDone": true,
       "isRemoved": false,
       "startTime": 1704878497664,
-      "endTime": null
+      "endTime": 1704879125430
     },
     {
       "name": "Finished task",
@@ -19,6 +19,22 @@
       "isRemoved": false,
       "startTime": 1704878486934,
       "endTime": 1704878492463
+    },
+    {
+      "name": "sdsd",
+      "id": 3,
+      "time": 0,
+      "isRunning": false,
+      "isDone": false,
+      "isRemoved": false
+    },
+    {
+      "name": "sd",
+      "id": 4,
+      "time": 0,
+      "isRunning": false,
+      "isDone": false,
+      "isRemoved": false
     }
   ]
 }

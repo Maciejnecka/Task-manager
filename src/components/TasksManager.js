@@ -8,6 +8,7 @@ class TasksManager extends React.Component {
     this.state = {
       tasks: [],
       task: '',
+      errorMessage: '',
       intervalId: null,
       confirmationModalIds: {},
     };
@@ -61,7 +62,7 @@ class TasksManager extends React.Component {
   };
 
   handleChange = (e) => {
-    this.setState({ task: e.target.value });
+    this.setState({ task: e.target.value, errorMessage: '' });
   };
 
   handleSubmit = async (e) => {
@@ -70,7 +71,7 @@ class TasksManager extends React.Component {
     const { task, tasks } = this.state;
 
     if (!task.trim()) {
-      console.error('Task name cannot be empty.');
+      this.setState({ errorMessage: 'Task name cannot be empty.' });
       return;
     }
 
@@ -229,6 +230,11 @@ class TasksManager extends React.Component {
               onChange={this.handleChange}
             />
           </label>
+          {this.state.errorMessage && (
+            <p className="tasks-manager__error-message">
+              {this.state.errorMessage}
+            </p>
+          )}
           <button className="tasks-manager__button" type="submit">
             Add Task
           </button>

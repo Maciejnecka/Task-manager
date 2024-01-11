@@ -1,11 +1,14 @@
 # TasksManager React App
+
+A simple React application for effective task management.
+It allows users to add, start/stop, complete, and delete tasks.
+The application also tracks the time dedicated to each task.
+
+See the live version: [Live demo - Tasks manager](https://maciejnecka.github.io/Task-manager/)🌐
+
 <div align="center">
   <img src="./assets/TasksManager.png" alt="TasksManager Screenshot">
 </div>
-
-TasksManager is a simple React application designed to help you manage your tasks efficiently. It provides a user-friendly interface to add, start/stop, finish, and remove tasks. The application also tracks the time spent on each task.
-
-See the live version [Soon... 🌐](#)
 
 ## Functionalities
 

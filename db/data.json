@@ -1,34 +1,32 @@
 {
   "tasks": [
     {
-      "name": "Task ",
+      "name": "Finished task",
       "id": 1,
-      "time": 222,
+      "time": 3,
       "isRunning": false,
       "isDone": true,
       "isRemoved": false,
-      "startTime": 1704878497664,
-      "endTime": 1704879125430
+      "startTime": 1704989606369,
+      "endTime": 1704989609731
     },
     {
-      "name": "Finished task",
+      "name": "Task",
       "id": 2,
       "time": 5,
       "isRunning": false,
-      "isDone": true,
+      "isDone": false,
       "isRemoved": false,
-      "startTime": 1704878486934,
-      "endTime": 1704878492463
+      "startTime": 1704989621991,
+      "endTime": 1704989627523
     },
     {
-      "name": "sddsd",
+      "name": "Task 2",
       "id": 3,
-      "time": 2,
+      "time": 0,
       "isRunning": false,
-      "isDone": true,
-      "isRemoved": false,
-      "startTime": 1704928802207,
-      "endTime": 1704928804831
+      "isDone": false,
+      "isRemoved": false
     }
   ]
 }
